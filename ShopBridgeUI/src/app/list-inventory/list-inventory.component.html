@@ -1,0 +1,106 @@
+<header>
+    <h2>ShopBridge Inventory Management</h2>
+
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+            <button class="btn btn-success" (click)="create()">Create New Product</button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+            <table #productsTable class="display" style="width:100%"*ngIf="!isToggled && RtnData">
+                <thead>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Edit Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of RtnData">
+                        <td>{{product.id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.price}}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="ViewProduct(product.id)">View</button>
+                            <button type="button" class="btn btn-warning" (click)="showEditUserForm(product)">Edit</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteProducts(product.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
+            <form [formGroup]="productForm" (ngSubmit)="updateProduct(productForm.value)"*ngIf="editUserForm &&isToggled">
+                <div  [hidden] class="form-group">
+                    <input  type="hidden" class="form-control" placeholder="Enter Id" formControlName="id" [(ngModel)]="editedUser.id" required>
+
+                    <div class="alert-danger" *ngIf="!productForm.controls['id'].valid && (productForm.controls['id'].touched)">
+                        <div [hidden]="!productForm.controls['id'].errors.required">
+                            ID is required.
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Name" formControlName="name" [(ngModel)]="editedUser.name" required>
+
+                    <div class="alert-danger" *ngIf="!productForm.controls['name'].valid && (productForm.controls['name'].touched)">
+                        <div [hidden]="!productForm.controls['name'].errors.required">
+                            Name is required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label>Desc</label>
+                    <input type="text" class="form-control" placeholder="description" formControlName="description" [(ngModel)]="editedUser.description" required>
+                    <div class="alert-danger" *ngIf="!productForm.controls['description'].valid && (productForm.controls['description'].touched)">
+                        <div [hidden]="!productForm.controls['description'].errors.required">
+                            Description is required.
+                        </div>
+                        <div [hidden]="!productForm.controls['description'].errors.minlength">
+                            Description must be have 10 character length.
+                        </div>
+                        <div [hidden]="!productForm.controls['description'].errors.maxlength">
+                            Description must be have 1000 character length.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" class="form-control" placeholder="price" formControlName="price" [(ngModel)]="editedUser.price" required>
+                    <div class="alert-danger" *ngIf="!productForm.controls['price'].valid && (productForm.controls['price'].touched)">
+                        <div [hidden]="!productForm.controls['price'].errors.required">
+                            Price is required.
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Update Details</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

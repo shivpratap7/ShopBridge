@@ -1,0 +1,69 @@
+
+<header>
+    <h2>ADD ITEM</h2>
+
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
+            <form [formGroup]="productForm" (ngSubmit)="saveProduct(productForm.value)">
+            
+
+                <div class="form-group">
+                    <input type="hidden" class="form-control" placeholder="Enter Id" >
+
+
+                </div>
+
+                <div class="form-group">
+                        <div class="file-field">
+                                <input type="file" multiple>
+                             </div>
+                    
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Name" formControlName="name"[(ngModel)]="vm.name" required>
+
+                    <div class="alert-danger" *ngIf="!productForm.controls['name'].valid && (productForm.controls['name'].touched)">
+                        <div [hidden]="!productForm.controls['name'].errors.required">
+                            Name is required.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label>Desc</label>
+                    <input type="text" class="form-control" placeholder="description" formControlName="description"[(ngModel)]="vm.description"  required>
+                    <div class="alert-danger" *ngIf="!productForm.controls['description'].valid && (productForm.controls['description'].touched)">
+                        <div [hidden]="!productForm.controls['description'].errors.required">
+                            Description is required.
+                        </div>
+                        <div [hidden]="!productForm.controls['description'].errors.minlength">
+                            Description must be have 10 character length.
+                        </div>
+                        <div [hidden]="!productForm.controls['description'].errors.maxlength">
+                            Description must be have 1000 character length.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" class="form-control" placeholder="price" formControlName="price"[(ngModel)]="vm.price" required>
+                    <div class="alert-danger" *ngIf="!productForm.controls['price'].valid && (productForm.controls['price'].touched)">
+                        <div [hidden]="!productForm.controls['price'].errors.required">
+                            Price is required.
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
